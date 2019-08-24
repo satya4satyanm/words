@@ -3,7 +3,8 @@
     font-family: 'Segoe UI';
     font-size: 12pt;
     margin: 10px;
-    background: #fff;
+	background: #fff;
+	overflow-y: hidden;
 }
 
 header h1{
