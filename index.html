@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html language="en-us" class="aui kes">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Word Learner</title>
+		<link rel="stylesheet" href="style.css"/>
+	</head>
+	<body>
+		<header>
+			<h1>Vocabulary for Everyone</h1> <center><h3><a href="more.html">Build Vocabulary</a></h3></center>
+			<h4>Load a text file or select a class from left menu.</h4>
+		</header>
+		<article>
+			<center>
+				<input id="files" type="file" class="custom-file-input" />
+				<!-- or
+				 <button class="wordsBtn" id="3letter">Load Words</button-->
+			</center>
+		</article>
+
+
+
+		<div class="words"></br></br></br></br></br></br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			Click any button to start
+		</div>
+
+		<div class="leftMenu">
+				<button class="wordsBtn" id="0">0</button></br></br>
+				<button class="wordsBtn" id="1">1</button></br></br>
+				<button class="wordsBtn" id="2">2</button></br></br>
+				<button class="wordsBtn" id="3">3</button></br></br>
+				<button class="wordsBtn" id="4">4</button></br></br>
+				<button class="wordsBtn" id="5">5</button>
+		</div>
+		<!-- https://relatedwords.org/relatedto/knights -->
+		<!--img class="removeBtn" src="remove.png" width="100"/>
+		<img class="addBtn" src="add.png" width="100"/-->
+		<center><button class="myButton" id="addBtn">Add to known list</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;<button class="myButton" id="knownBtn">Known to me</button> </br></br>
+		
+		I know <span id="count">0</span> words.
+	</center>
+			<script src="js/jquery.js"></script>
+		<script language="javascript" src="js/custom.js"></script>
+		
+	</body>
+</html>
