@@ -210,7 +210,6 @@ window.onload = function() {
 			}*/
 			
 			
-			debugger;
 			$(".selected").each(function() {
 				var val = $(this).text();
 				if(addedWords.indexOf(val)<0)
@@ -221,7 +220,7 @@ window.onload = function() {
 			
 			$(".selected").hide();
 
-			$("#count").text(addedWords.length);
+			$("#count").text(JSON.parse(localStorage["storedWords"]).length);
 		});
 	}
 	
