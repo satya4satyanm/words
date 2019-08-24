@@ -165,34 +165,7 @@ window.onload = function() {
 			$(".words").append( "<div class='word'><a href='http://dictionary.reference.com/browse/"+ws[i]+"' target='blank'>"+ws[i]+"</a><!--span class='close'>x</span--><img class='checkbox' src='checkbox_empty.png' /></div>" );
 		}
 		
-		$("#addBtn").on('click', function(){
-			/*var request = new XMLHttpRequest();
-			request.open("GET", "/gcide_xml-0.51/gcide_xml-0.51/xml_files/gcide_t.xml", false);
-			request.send();
-			var xml = request.responseXML;
-			var users = xml.getElementsByTagName("user");
-			for(var i = 0; i < users.length; i++) {
-				var user = users[i];
-				var names = user.getElementsByTagName("name");
-				for(var j = 0; j < names.length; j++) {
-					alert(names[j].childNodes[0].nodeValue);
-				}
-			}*/
-			
-			
-			debugger;
-			$(".selected").each(function() {
-				var val = $(this).text();
-				if(addedWords.indexOf(val)<0)
-				addedWords.push(val);
-			});
-			
-			localStorage["storedWords"] = JSON.stringify(addedWords);
-			
-			$(".selected").hide();
-
-			$("#count").text(addedWords.length);
-		});
+		
 
 		
 		
@@ -220,6 +193,35 @@ window.onload = function() {
 				$(this).attr('src', 'checkbox_empty.png');
 				$(this).parent().removeClass("selected");
 			}
+		});
+
+		$("#addBtn").on('click', function(){
+			/*var request = new XMLHttpRequest();
+			request.open("GET", "/gcide_xml-0.51/gcide_xml-0.51/xml_files/gcide_t.xml", false);
+			request.send();
+			var xml = request.responseXML;
+			var users = xml.getElementsByTagName("user");
+			for(var i = 0; i < users.length; i++) {
+				var user = users[i];
+				var names = user.getElementsByTagName("name");
+				for(var j = 0; j < names.length; j++) {
+					alert(names[j].childNodes[0].nodeValue);
+				}
+			}*/
+			
+			
+			debugger;
+			$(".selected").each(function() {
+				var val = $(this).text();
+				if(addedWords.indexOf(val)<0)
+				addedWords.push(val);
+			});
+			
+			localStorage["storedWords"] = JSON.stringify(addedWords);
+			
+			$(".selected").hide();
+
+			$("#count").text(addedWords.length);
 		});
 	}
 	
