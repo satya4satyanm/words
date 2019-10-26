@@ -9,12 +9,21 @@
 		<style>
 		.result {
 			column-count: 2;
-			height: 350px;
+			height: 250px;
 			overflow-y: scroll;
 		}
 
 		.result li {
 			list-style: none;
+		}
+
+		#imgholder {
+			text-align: center;
+		}
+		.img {
+			max-height: 60px;
+			max-width: 100px;
+			margin: 5px;
 		}
 		</style>
 	</head>
@@ -27,12 +36,25 @@
 				<P>Select a topic to get words to build upon.</P>
 				<input type="text" name="w" id="w" placeholder="cow" > <input type="button" value="Load" id="b">
 			</center>
+			<div id="imgholder"></div>
 			<ul class="result"></ul>
 		</div>
 		<script src="js/jquery.js"></script>
 		<script>
+			//https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q=cow&image_type=photo&pretty=true&per_page=3
+
 			$('#b').click(
 				function() {
+
+					$.get( "https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q="+$("#w").val()+"&image_type=photo&pretty=true&per_page=3", function( data ) {
+						var res = data.hits;
+						$( "#imgholder" ).empty();
+						$.each(res, function(i, item) {
+							var iurl = item["previewURL"];
+							$("#imgholder").append("<img src='"+iurl+"' class='img' />");
+						});
+					});
+
 					$.get( "http://api.conceptnet.io/related/c/en/"+$("#w").val()+"?filter=/c/en&limit=200", function( data ) {
 						var res = data.related;
 						//alert( "Load was performed." );
@@ -46,6 +68,7 @@
 
 						sortByLen(words);
 						$( ".result" ).empty();
+						$( ".result" ).scrollLeft($( ".result" ).width());
 						$.each(words, function(i, item) {
 							$( ".result" ).append("<li><b>"+item+"</b></li>")
 						});
