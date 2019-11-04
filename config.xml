@@ -10,6 +10,7 @@
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-targetSdkVersion" value="26" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
@@ -39,7 +40,7 @@
     <platform name="windows">
     </platform>
     <access origin="*" />
-
+      <application android:usesCleartextTraffic="true"></application>
     <allow-navigation href="http://*/*" />
     <allow-navigation href="https://*/*" />
 
@@ -54,4 +55,10 @@
     </platform>
     <platform name="ios">
     </platform>
+    <platform name="android">
+         <preference name="android-minSdkVersion" value="14" />
+
+         <preference name="android-targetSdkVersion" value="26" />
+
+      </platform>
 </widget>
