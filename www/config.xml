@@ -16,7 +16,7 @@
    <author href = "http://livetoyourpassion.com" email = "contact@livetoyourpassion.com">
       Tutorials Point
    </author>
-   
+   </meta>
    <preference name = "permissions" value = "none"/>
    
    <icon src = "res/icon/android/drawable-ldpi/tp_icon.png" 
