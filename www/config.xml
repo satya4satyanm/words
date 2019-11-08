@@ -1,39 +1,16 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-
 <widget xmlns = "http://www.w3.org/ns/widgets" 
    xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.livetoyourpassion.words" version = "1.0">
-   
-   <access origin="*" />
-<allow-navigation href="*" />
-<allow-intent href="*" />
-<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'  *">
    <name>Tutorials Point</name>
-   
    <description>
       Tutorials Point Online Viewer
    </description>
-   
    <author href = "http://livetoyourpassion.com" email = "contact@livetoyourpassion.com">
       Tutorials Point
    </author>
-   </meta>
+   <content src="www/index.html" />
    <preference name = "permissions" value = "none"/>
-   
-   <icon src = "res/icon/android/drawable-ldpi/tp_icon.png" 
-      gap:platform = "android" gap:qualifier = "ldpi" />
-		
-   <icon src = "res/icon/android/drawable-mdpi/tp_icon.png" 
-      gap:platform = "android" gap:qualifier = "mdpi" />
-		
-   <icon src = "res/icon/android/drawable-hdpi/tp_icon.png" 
-      gap:platform = "android" gap:qualifier = "hdpi" />
-		
-   <icon src = "res/icon/android/drawable-xhdpi/tp_icon.png" 
-      gap:platform = "android" gap:qualifier = "xhdpi" />
-		
-   <icon src = "res/icon/android/drawable-xxhdpi/tp_icon.png" 
-      gap:platform = "android" gap:qualifier = "xxhdpi" />
-   
-   
-   
+   <access origin="*" />
+   <allow-navigation href="*" />
+   <allow-intent href="*" />
 </widget>
