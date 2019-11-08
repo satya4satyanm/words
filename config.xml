@@ -8,7 +8,7 @@
    <author href = "http://livetoyourpassion.com" email = "contact@livetoyourpassion.com">
       Tutorials Point
    </author>
-   <content src="www/index.html" />
+   <content src="index.html" />
    <preference name = "permissions" value = "none"/>
    <access origin="*" />
    <allow-navigation href="*" />
