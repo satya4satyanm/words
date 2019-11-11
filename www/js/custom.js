@@ -3,7 +3,6 @@ window.onload = function() {
 	var len = JSON.parse(localStorage["storedWords"]).length;
 	$("#count").text(len);
 	} catch(e){}
-	alert($.support);
 	$.support.cors = true;
 	
 
