@@ -4,6 +4,7 @@ window.onload = function() {
 	$("#count").text(len);
 	} catch(e){}
 	
+	alert("satya")
 	$.support.cors = true;
 	if($.mobile) {
 		$.mobile.allowCrossDomainPages = true;
