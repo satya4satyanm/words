@@ -3,6 +3,25 @@ window.onload = function() {
 	var len = JSON.parse(localStorage["storedWords"]).length;
 	$("#count").text(len);
 	} catch(e){}
+	
+	$.support.cors = true;
+	if($.mobile) {
+		$.mobile.allowCrossDomainPages = true;
+		alert("got mobile got")
+	}
+
+
+	$.ajax({
+		type : 'get',	//Request method: GET, POST  
+		url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200',  //Where to send the data
+		success:function(data) {
+			//Here you will receive data from server
+			//Do what you want to do with data                         
+			alert(JSON.stringify(data));	 //This is a example, like we want to print the result
+		}
+	})
+
+
 	var classes= [
 		{
 			words: "Age appear artist autumn Bay beak bloom bumpy burst buzz Care check chilly chore comfort community country covered cradle Dangle decision delicious dentist dew disappear drawer dusty Edge Farmer fear firefly fix flipper fluffy follow Gallop gentle giggle glance glossy glow goal gust Half healthy herd hoof Include invitation Knight Laundry lazy leaf leak library Market melt miserable month muddy museum Note Pace pair patient peaceful peck pilot plan pointy polite pond president protect proud Race reach relax rotten round row Sail scene scrub shade shaky ship shore silky sink slide slip sniff soapy sparkle spotted spring stare summer supplies Tangled tent tomorrow trade trunk Warm wave week wiggle winter wish Yesterday young"
