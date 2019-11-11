@@ -19,7 +19,13 @@ window.onload = function() {
 			//Here you will receive data from server
 			//Do what you want to do with data                         
 			alert(JSON.stringify(data));	 //This is a example, like we want to print the result
-		}
+		},
+
+		error: function() {
+	 
+		alert(key);
+	 
+	   }
 	})
 
 
