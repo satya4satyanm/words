@@ -11,9 +11,6 @@
    <content src="index.html" />
    <preference name = "permissions" value = "none"/>
    <access origin="*" />
-   <allow-navigation href="*" />
-   <allow-intent href="*" />
-   <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-        <application android:usesCleartextTraffic="true" />
-    </edit-config>
+    <preferance name="android-usesCleartextTraffic" value="true" />
+    <allow-navigation href="*" />
 </widget>
