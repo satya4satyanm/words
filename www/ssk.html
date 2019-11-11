@@ -48,9 +48,6 @@
 
 			$('#b').click(
 				function() {
-					alert($("#w").val());
-
-
 					$.get( "https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q="+$("#w").val()+"&image_type=photo&pretty=true&per_page=3", 
 						function( data ) {
 							var res = data.hits;
@@ -68,6 +65,7 @@
 								crossDomain: true,
 								url : 'http://api.conceptnet.io/related/c/en/'+$("#w").val()+'?filter=/c/en&limit=200',
 								success:function(data) {
+									alert(JSON.stringify(data));
 									var res = data.related;
 									var words = [];
 									$.each(res, function(i, item) {
@@ -80,7 +78,7 @@
 									$.each(words, function(i, item) {
 										$( ".result" ).append("<li><b>"+item+"</b></li>")
 									});
-									alert(words);
+									
 								},
 								error: function(e) {
 									alert(JSON.stringify(e));
