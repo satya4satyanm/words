@@ -1,6 +1,5 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<widget xmlns = "http://www.w3.org/ns/widgets" 
-   xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.livetoyourpassion.words" versionCode = "10" version = "1.0.0">
+<widget id="com.livetoyourpassion.words" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
    <name>Tutorials Point</name>
    <description>
       Tutorials Point Online Viewer
@@ -9,8 +8,16 @@
      Satya
    </author>
    <content src="index.html" />
+   <content src="*" />
    <preference name = "permissions" value = "none"/>
    <access origin="*" />
     <preferance name="android-usesCleartextTraffic" value="true" />
     <allow-navigation href="*" />
+
+    <platform name="android">
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+    </platform>
+    
 </widget>
