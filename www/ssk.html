@@ -60,27 +60,32 @@
 								$("#imgholder").append("<img src='"+iurl+"' class='img' />");
 							});
 
-
-
-								$.get( "http://api.conceptnet.io/related/c/en/"+$("#w").val()+"?filter=/c/en&limit=200", function( data ) {
-								var res = data.related;
-								//alert( "Load was performed." );
-
-								var words = [];
-
-								$.each(res, function(i, item) {
-									var word = item["@id"].split("/")[3];
-									words.push(word);
-								});
-
-								sortByLen(words);
-								$( ".result" ).empty();
-								$( ".result" ).scrollLeft($( ".result" ).width());
-								$.each(words, function(i, item) {
-									$( ".result" ).append("<li><b>"+item+"</b></li>")
-								});
-
-							});
+							$.ajax({
+								type : 'get',	//Request method: GET, POST  
+								method: 'get',
+								dataType:"JSON",
+								contentType: "application/JSONP; charset=utf-8",
+								crossDomain: true,
+								url : 'http://api.conceptnet.io/related/c/en/'+$("#w").val()+'?filter=/c/en&limit=200',
+								success:function(data) {
+									var res = data.related;
+									var words = [];
+									$.each(res, function(i, item) {
+										var word = item["@id"].split("/")[3];
+										words.push(word);
+									});
+									sortByLen(words);
+									$( ".result" ).empty();
+									$( ".result" ).scrollLeft($( ".result" ).width());
+									$.each(words, function(i, item) {
+										$( ".result" ).append("<li><b>"+item+"</b></li>")
+									});
+									alert(words);
+								},
+								error: function(e) {
+									alert(JSON.stringify(e));
+							}
+							})
 
 
 

@@ -5,22 +5,7 @@ window.onload = function() {
 	} catch(e){}
 	$.support.cors = true;
 
-	$.ajax({
-		type : 'get',	//Request method: GET, POST  
-		method: 'get',
-		dataType:"JSON",
-		contentType: "application/JSONP; charset=utf-8",
-		crossDomain: true,
-		url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200', //http://dummy.restapiexample.com/api/v1/employees  //Where to send the data
-		success:function(data) {
-			//Here you will receive data from server
-			//Do what you want to do with data                         
-			alert(JSON.stringify(data));	 //This is a example, like we want to print the result
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));
-	   }
-	})
+	
 
 
 	var classes= [
