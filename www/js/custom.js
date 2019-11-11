@@ -17,8 +17,8 @@ window.onload = function() {
 			//Do what you want to do with data                         
 			alert(JSON.stringify(data));	 //This is a example, like we want to print the result
 		},
-		error: function() {
-			alert("satya error");
+		error: function(e) {
+			alert(e);
 	   }
 	})
 
