@@ -8,7 +8,6 @@
      Satya
    </author>
    <content src="index.html" />
-   <content src="*" />
    <preference name = "permissions" value = "none"/>
    <access origin="*" />
     <preferance name="android-usesCleartextTraffic" value="true" />
@@ -19,5 +18,5 @@
             <application android:usesCleartextTraffic="true" />
         </edit-config>
     </platform>
-    
+
 </widget>
