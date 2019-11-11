@@ -11,7 +11,7 @@ window.onload = function() {
 		dataType:"JSON",
 		contentType: "application/JSONP; charset=utf-8",
 		crossDomain: true,
-		url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200',  //Where to send the data
+		url : 'http://dummy.restapiexample.com/api/v1/employees',  //Where to send the data
 		success:function(data) {
 			//Here you will receive data from server
 			//Do what you want to do with data                         
