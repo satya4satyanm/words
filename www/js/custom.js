@@ -3,27 +3,22 @@ window.onload = function() {
 	var len = JSON.parse(localStorage["storedWords"]).length;
 	$("#count").text(len);
 	} catch(e){}
-	alert($.mobile);
 	$.support.cors = true;
-	if($.mobile) {
-		$.mobile.allowCrossDomainPages = true;
-		alert("got mobile got")
-	}
-
 
 	$.ajax({
 		type : 'get',	//Request method: GET, POST  
+		method: 'get',
+		dataType:"JSON",
+		contentType: "application/JSONP; charset=utf-8",
+		crossDomain: true,
 		url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200',  //Where to send the data
 		success:function(data) {
 			//Here you will receive data from server
 			//Do what you want to do with data                         
 			alert(JSON.stringify(data));	 //This is a example, like we want to print the result
 		},
-
 		error: function() {
-	 
-		alert(key);
-	 
+			alert("satya error");
 	   }
 	})
 
