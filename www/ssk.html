@@ -2,7 +2,7 @@
 <html language="en-us" class="aui kes">
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Word Learner</title>
 		<link rel="stylesheet" href="style.css"/>
@@ -45,7 +45,7 @@
 
 			$('#b').click(
 				function() {
-
+					alert($("#w").val());
 					$.get( "https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q="+$("#w").val()+"&image_type=photo&pretty=true&per_page=3", function( data ) {
 						var res = data.hits;
 						$( "#imgholder" ).empty();
