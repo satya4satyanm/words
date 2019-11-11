@@ -1,12 +1,12 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets" 
-   xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.livetoyourpassion.words" version = "1.0">
+   xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.livetoyourpassion.words" versionCode = "10" version = "1.0.0">
    <name>Tutorials Point</name>
    <description>
       Tutorials Point Online Viewer
    </description>
-   <author href = "http://livetoyourpassion.com" email = "contact@livetoyourpassion.com">
-      Tutorials Point
+   <author href = "http://livetoyourpassion.com" email = "satya4satyanm@gmail.com">
+     Satya
    </author>
    <content src="index.html" />
    <preference name = "permissions" value = "none"/>
