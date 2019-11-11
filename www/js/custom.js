@@ -3,8 +3,13 @@ window.onload = function() {
 	var len = JSON.parse(localStorage["storedWords"]).length;
 	$("#count").text(len);
 	} catch(e){}
+	alert($.mobile);
 	$.support.cors = true;
-	
+	if($.mobile) {
+		$.mobile.allowCrossDomainPages = true;
+		alert("got mobile got")
+	}
+
 
 	$.ajax({
 		type : 'get',	//Request method: GET, POST  
