@@ -35,9 +35,7 @@
 		<div>
 			<center>
 				<P>Select a topic to get words to build upon.</P>
-				<input type="text" name="w" id="w" placeholder="cow" style="font-size: 24px;
-				width: 50%;border: 2px solid lightskyblue;
-    padding: 5px;" > <input class="myButton" type="button" value="Load" id="b" style="font-size:24px;">
+				<input type="text" name="w" id="w" placeholder="cow" style="font-size: 24px; width: 50%;border: 2px solid lightskyblue; padding: 5px;" > <input class="myButton" type="button" value="Load" id="b" style="font-size:24px;">
 			</center>
 			<div id="imgholder"></div>
 			<ul class="result"></ul>
@@ -63,7 +61,7 @@
 								dataType:"JSON",
 								contentType: "application/JSONP; charset=utf-8",
 								crossDomain: true,
-								url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200',
+								url : 'http://api.conceptnet.io/related/c/en/'+$("#w").val()+'?filter=/c/en&limit=200',
 								success:function(data) {
 									alert(JSON.stringify(data));
 									var res = data.related;
