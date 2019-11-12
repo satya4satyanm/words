@@ -55,13 +55,14 @@
 								$("#imgholder").append("<img src='"+iurl+"' class='img' />");
 							});
 
+							var wordin = $("#w").val().toLowerCase();
 							$.ajax({
 								type : 'get',	//Request method: GET, POST  
 								method: 'get',
 								dataType:"JSON",
 								contentType: "application/JSONP; charset=utf-8",
 								crossDomain: true,
-								url : 'http://api.conceptnet.io/related/c/en/'+$("#w").val()+'?filter=/c/en&limit=200',
+								url : 'http://api.conceptnet.io/related/c/en/'+wordin+'?filter=/c/en&limit=200',
 								success:function(data) {
 									alert(JSON.stringify(data));
 									var res = data.related;
