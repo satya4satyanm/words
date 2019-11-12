@@ -63,7 +63,7 @@
 								dataType:"JSON",
 								contentType: "application/JSONP; charset=utf-8",
 								crossDomain: true,
-								url : 'http://api.conceptnet.io/related/c/en/'+$("#w").val()+'?filter=/c/en&limit=200',
+								url : 'http://api.conceptnet.io/related/c/en/cow?filter=/c/en&limit=200',
 								success:function(data) {
 									alert(JSON.stringify(data));
 									var res = data.related;
