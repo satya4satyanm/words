@@ -9,7 +9,7 @@ body{
 header h1{
     font-size:20pt;
     color: #fff;
-    background-color: #1BA1E2;
+    background-color: #3A5F0B;
     padding: 5px;
 	margin: 0;
 	text-align: center;
@@ -42,14 +42,15 @@ input[type='file']{
 }
 
 .word{
-	font-size:14pt;
+	font-size: 14pt;
     color: #fff;
     background-color: #1BA1E2;
     padding: 10px;
-	margin:5px auto;
-    overflow:hidden;
-    width: 65%;
+    margin: 5px 20px 4px 40px;
+    overflow: hidden;
+    width: 75%;
 }
+
 .word a{
 	text-decoration:none;
 	color:#fff;

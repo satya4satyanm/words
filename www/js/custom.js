@@ -138,8 +138,8 @@ window.onload = function() {
 	
 
 	function loadClass(num) {
+		$('.words').scrollTop(0);
 		string = classes[num].words.toLowerCase();
-		debugger;
 		string = string.removeStopWords();
 		var wordsi = string.split(" ");
 		
@@ -291,9 +291,7 @@ window.onload = function() {
 		"9",
 		"one","two","three","four","five","six","seven","eight","nine","zero"
 	];
-	debugger;
 	stop_words = stop_words.concat(addedWords);
-	debugger;
          
     // Split out all the individual words in the phrase
     words = cleansed_string.match(/[^\s]+|\s+[^\s+]$/g)
