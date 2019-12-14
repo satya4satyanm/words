@@ -146,8 +146,44 @@ window.onload = function() {
 		$(".words").empty();
 
 		for(var i=0; i<wordsi.length; i++){
-			$(".words").append( "<div class='word'><a href='http://dictionary.reference.com/browse/"+wordsi[i]+"' target='blank'>"+wordsi[i]+"</a><img class='checkbox' src='checkbox_empty.png' /></div>" );
+			$(".words").append( "<div class='word'><b>"+wordsi[i]+"</b><img class='checkbox' src='checkbox_empty.png' /></div>" );
 		}
+
+		$(".words .word").click(function() {
+			var word = $(this).text();
+			$("#selWord").text(word);
+			$("#pop1").show();
+			$( "#popRelWords" ).text("Loading related words. Please wait.");
+			$.ajax({
+				type : 'get',	//Request method: GET, POST  
+				method: 'get',
+				dataType:"JSON",
+				contentType: "application/JSONP; charset=utf-8",
+				crossDomain: true,
+				url : 'http://api.conceptnet.io/related/c/en/'+word+'?filter=/c/en&limit=11',
+				success:function(data) {
+					var res = data.related;
+					var words = [];
+					$.each(res, function(i, item) {
+						var word = item["@id"].split("/")[3];
+						words.push(word);
+					});
+					words.shift();
+					$( "#popRelWords" ).empty();
+					$( "#popRelWords" ).scrollLeft($( "#popRelWords" ).width());
+					$( "#popRelWords" ).scrollTop(0);
+					$.each(words, function(i, item) {
+						$( "#popRelWords" ).append(item+"<br/>")
+					});
+					
+				},
+				error: function(e) {
+					alert(JSON.stringify(e));
+			}
+			})
+
+
+		})
 
 		enableCheckBoxes()
 	}
@@ -235,7 +271,11 @@ window.onload = function() {
 		});
 	}
 	
-	
+
+	$("#closeBtn").click(function() {
+		$("#pop1").hide();
+	});
+	$("#pop1").hide();
 	
 	
 	String.prototype.removeStopWords = function() {

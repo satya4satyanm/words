@@ -13,12 +13,12 @@
 	</head>
 	<body>
 		<header>
-			<h1>Vocabulary Builder</h1> <center><h3><a href="ssk.html">Activities</a></h3></center>
-			<h4>Load a text file or select a standard from left.</h4>
+			<h1>Vocabulary Builder</h1> <center><h3><a href="ssk.html">Related Words</a></h3></center>
+			<h4>Select a standard. Select word to know more.</h4>
 		</header>
-		<article>
+		<article style="height: 0px;">
 			<center>
-				<input id="files" type="file" class="custom-file-input" />
+				<input id="files" type="file" class="custom-file-input" style="visibility: hidden;" />
 				<!-- or
 				 <button class="wordsBtn" id="3letter">Load Words</button-->
 			</center>
@@ -42,11 +42,23 @@
 		<!-- https://relatedwords.org/relatedto/knights -->
 		<!--img class="removeBtn" src="remove.png" width="100"/>
 		<img class="addBtn" src="add.png" width="100"/-->
-		<center><button class="myButton" id="addBtn">Add to known list</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;<button class="myButton" id="knownBtn">Known to me</button> </br></br>
+	</br>
+		<center><button class="myButton" id="addBtn">Add Now</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;<button class="myButton" id="knownBtn">Known</button> </br></br>
 		
 		I know <span id="count">0</span> words.
 	</center>
+
+	<div class="popup-light" id="pop1">
+		<div class="popup">
+			<center>Realated words for<h2 id="selWord" style="color: #900;margin: 0 0 20px;">Word Clicked</h2>
+		<div class="prw" id="popRelWords">
+			Loading related words. Please wait.
+		</div>
+		<button class="myButton closeBtn" id="closeBtn">Close</button></center>
+		</div>
+	</div>
+
 			<script src="js/jquery.js"></script>
 		<script language="javascript" src="js/custom.js"></script>
 
