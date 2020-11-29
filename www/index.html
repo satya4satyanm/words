@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html language="en-us" class="aui kes">
-	<head>
-			<meta charset="utf-8" />
-			<meta name="format-detection" content="telephone=no" />
-			<meta name="msapplication-tap-highlight" content="no" />
-			<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-			<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-			<meta http-equiv="Content-Security-Policy" content="default-src 'self' http://*; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; media-src *; img-src * 'self' data: file: cdvfile: http: https:; frame-src http: https: gap: cdvfile:; connect-src *">
-		<title>Word Learner</title>
-		<link rel="stylesheet" href="style.css"/>
-		<!-- <script type="text/javascript" src="phonegap.js"></script> -->
-	</head>
-	<body>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self' http://*; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; media-src *; img-src * 'self' data: file: cdvfile: http: https:; frame-src http: https: gap: cdvfile:; connect-src *">
+	<title>Word Learner</title>
+	<link rel="stylesheet" href="style.css" />
+	<!-- <script type="text/javascript" src="phonegap.js"></script> -->
+</head>
+
+<body>
+	<div id="mobileView">
 		<header>
-			<h1>Vocabulary Builder</h1> <center><h3><a href="ssk.html">Related Words</a></h3></center>
-			<h4>Select a standard. Select word to know more.</h4>
+			<h1>Vocabulary Builder</h1>
+			<center>
+				<h3><a href="ssk.html">Related Words</a> <span id="helpLink">Help</span></h3>
+			</center>
+			<h4>Select a standard. Click word to know more.</h4>
 		</header>
 		<article style="height: 0px;">
 			<center>
@@ -27,43 +35,75 @@
 
 
 		<div class="words"></br></br></br></br></br></br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Click any button to start
+			<img src="./arrow.png" /></br>
+			Choose a standard
 		</div>
 
 		<div class="leftMenu">
-				<button class="wordsBtn" id="0">0</button></br></br>
-				<button class="wordsBtn" id="1">1</button></br></br>
-				<button class="wordsBtn" id="2">2</button></br></br>
-				<button class="wordsBtn" id="3">3</button></br></br>
-				<button class="wordsBtn" id="4">4</button></br></br>
-				<button class="wordsBtn" id="5">5</button>
+			<button class="wordsBtn" id="0">0</button></br></br>
+			<button class="wordsBtn" id="1">1</button></br></br>
+			<button class="wordsBtn" id="2">2</button></br></br>
+			<button class="wordsBtn" id="3">3</button></br></br>
+			<button class="wordsBtn" id="4">4</button></br></br>
+			<button class="wordsBtn" id="5">5</button>
 		</div>
 		<!-- https://relatedwords.org/relatedto/knights -->
 		<!--img class="removeBtn" src="remove.png" width="100"/>
 		<img class="addBtn" src="add.png" width="100"/-->
-	</br>
+		</br>
 		<center><button class="myButton" id="addBtn">Add Now</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;<button class="myButton" id="knownBtn">Known</button> </br></br>
-		
-		I know <span id="count">0</span> words.
-	</center>
 
-	<div class="popup-light" id="pop1">
-		<div class="popup">
-			<center>Realated words for<h2 id="selWord" style="color: #900;margin: 0 0 20px;">Word Clicked</h2>
-		<div class="prw" id="popRelWords">
-			Loading related words. Please wait.
-		</div>
-		Looking for more related words. <a href="ssk.html">Click Here</a>.<br/><br/><br/>
-		<button class="myButton closeBtn" id="closeBtn">Close</button></center>
-		</div>
-	</div>
+			I know <span id="count">unknown</span> words.
+		</center>
 
-			<script src="js/jquery.js"></script>
+		<div class="popup-light" id="pop1">
+			<div class="popup">
+				<center>Realated words for<h2 id="selWord" style="color: #900;margin: 0 0 20px;">Word Clicked</h2>
+					<div class="prw" id="popRelWords">
+						Loading related words. Please wait.<br />
+						<img src="g.gif" />
+					</div>
+					<textarea id="tf" style="display:none;"></textarea>
+					Looking for more related words. <a id="moreW" href="#">Click Here</a>.<br /><br /><br />
+					<button class="myButton closeBtn" id="closeBtn">Close</button>
+				</center>
+			</div>
+		</div>
+
+		<div class="popup-light" id="help">
+			<div class="popup">
+				<h3>Application usage</h3>
+				<br />
+				<br />
+				<center>
+					Select a standard from the left.
+					<br />
+					<br />
+					Click the word to know more.
+					<br />
+					<br />
+					Check the words if you know them.
+					<br />
+					<br />
+					Click "Add now" button to add it to known list.
+					<br />
+					<br />
+					<br />
+					<br /><br />
+					<br />
+					<br />
+					<br />
+
+					<button class="myButton closeBtn" id="closeBtnHelp">Close</button></center>
+			</div>
+		</div>
+
+		<script src="js/jquery.js"></script>
 		<script language="javascript" src="js/custom.js"></script>
+		<script language="javascript" src="js/pdf.js"></script>
+		<!-- https://www.readingrockets.org/article/basic-spelling-vocabulary-list -->
+	</div>
+</body>
 
-		
-		
-	</body>
 </html>

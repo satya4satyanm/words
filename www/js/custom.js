@@ -1,14 +1,117 @@
-window.onload = function() {
-	try{
-	var len = JSON.parse(localStorage["storedWords"]).length;
-	$("#count").text(len);
-	} catch(e){}
+window.onload = function () {
+
+	var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+	if (isMobile) {
+		console.log("You are using Mobile");
+	} else {
+		console.log("You are using Desktop");
+		// document.querySelector("#mobileView").style.width = "400px";
+		// document.querySelector("#mobileView").style.margin = "0 auto";
+	}
+
+	String.prototype.removeStopWords = function () {
+		var x;
+		var y;
+		var word;
+		var stop_word;
+		var regex_str;
+		var regex;
+		var cleansed_string = this.valueOf();
+		var stop_words = [
+			"",
+			"[",
+			"`",
+			"~",
+			"!",
+			"@",
+			"#",
+			"$",
+			"%",
+			"^",
+			"&",
+			"*",
+			"(",
+			")",
+			"_",
+			"|",
+			"+",
+			"-",
+			"=",
+			"?",
+			";",
+			":",
+			",",
+			".",
+			"<",
+			">",
+			"{",
+			"}",
+			"[",
+			"]",
+			"/",
+			"]",
+			"0",
+			"1",
+			"2",
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8",
+			"9",
+			"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "zero"
+		];
+		stop_words = stop_words.concat(addedWords);
+
+		// Split out all the individual words in the phrase
+		words = cleansed_string.match(/[^\s]+|\s+[^\s+]$/g)
+		//console.log(words);
+		// Review all the words
+		for (x = 0; x < words.length; x++) {
+			// For each word, check all the stop words
+			for (y = 0; y < stop_words.length; y++) {
+				// Get the current word
+				word = words[x].replace(/\s+|[^a-z]+/g, "");   // Trim the word and remove non-alpha
+
+				// Get the stop word
+				stop_word = stop_words[y].toLowerCase();
+
+				// If the word matches the stop word, remove it from the keywords
+				if (word.toLowerCase() == stop_word.toLowerCase()) {
+					// Build the regex
+					regex_str = "^\\s*" + stop_word + "\\s*$";      // Only word
+					regex_str += "|^\\s*" + stop_word + "\\s+";     // First word
+					regex_str += "|\\s+" + stop_word + "\\s*$";     // Last word
+					regex_str += "|\\s+" + stop_word + "\\s+";      // Word somewhere in the middle
+					regex = new RegExp(regex_str, "g");
+
+					// Remove the word from the keywords
+					cleansed_string = cleansed_string.replace(regex, " ");
+				}
+			}
+		}
+		return cleansed_string.replace(/^\s+|\s+$/g, "");
+	}
+
+
+	try {
+		var len = JSON.parse(localStorage["storedWords"]).length;
+		$("#count").text(len);
+	} catch (e) { }
 	$.support.cors = true;
 
-	
+	$(".words").height(window.innerHeight - 250 + "px");
+	$(".leftMenu").height(window.innerHeight - 160 + "px");
 
+	$(window).resize(function () {
+		$(".words").height(window.innerHeight - 250 + "px");
+		$(".leftMenu").height(window.innerHeight - 160 + "px");
 
-	var classes= [
+	})
+
+	var classes = [
 		{
 			words: "Age appear artist autumn Bay beak bloom bumpy burst buzz Care check chilly chore comfort community country covered cradle Dangle decision delicious dentist dew disappear drawer dusty Edge Farmer fear firefly fix flipper fluffy follow Gallop gentle giggle glance glossy glow goal gust Half healthy herd hoof Include invitation Knight Laundry lazy leaf leak library Market melt miserable month muddy museum Note Pace pair patient peaceful peck pilot plan pointy polite pond president protect proud Race reach relax rotten round row Sail scene scrub shade shaky ship shore silky sink slide slip sniff soapy sparkle spotted spring stare summer supplies Tangled tent tomorrow trade trunk Warm wave week wiggle winter wish Yesterday young"
 		}, {
@@ -23,48 +126,76 @@ window.onload = function() {
 			words: "Abolish absurd abuse access accomplish achievement aggressive alternate altitude antagonist antonym anxious apparent approximate aroma assume astound available avalanche Banquet beverage bland blizzard budge bungle Cautiously challenge character combine companion crave compassion compensate comply compose concept confident convert course courteous Debate decline dedicate deprive detect dictate document duplicate Edible endanger escalate evade exasperate excavate exert exhibit exult Feeble frigid Gigantic gorge guardian Hazy hearty homonym Identical illuminate immense impressive independent industrious intense intercept Jubilation Kin Luxurious Major miniature minor mischief monarch moral myth Narrator navigate negative nonchalant numerous Oasis obsolete occasion overthrow Pardon pasture pedestrian perish petrify portable prefix preserve protagonist provide purchase Realistic reassure reign reliable require resemble retain retire revert route Saunter seldom senseless sever slither sluggish soar solitary solo sparse spurt strategy suffix suffocate summit suspend synonym Talon taunt thrifty translate tropical Visible visual vivid Wilderness withdraw"
 		}
 	];
-	
+
 	var addedWords = [];
-	
-	if(localStorage["storedWords"]){
+
+	if (localStorage["storedWords"]) {
 		addedWords = JSON.parse(localStorage["storedWords"]);
-	} 
-	
+	}
+
 	if (!Array.prototype.removeEmpty) {
-		  Array.prototype.removeEmpty = function() {
-				for(var k=0; k<this.length; k++) {
-				if(this[k].length < 3) {
+		Array.prototype.removeEmpty = function () {
+			for (var k = 0; k < this.length; k++) {
+				if (this[k].length < 3) {
 					this.splice(k, 1);
 					k--;
 				}
 			}
-			
+
 			return this;
-		  };
-		}
-	
+		};
+	}
 
-	$("#0").on('click', function(){ loadClass(0); });
-	$("#1").on('click', function(){ loadClass(1); });
-	$("#2").on('click', function(){ loadClass(2); });
-	$("#3").on('click', function(){ loadClass(3); });
-	$("#4").on('click', function(){ loadClass(4); });
-	$("#5").on('click', function(){ loadClass(5); });
-	
-	$(".3letter").on('click', function(){
-		var wordsi = ["ACE","ACT","ADD","ADS","AGE","AGO","AID","AIM","AIR","ALL","AND","ANT","ANY","APE","ARC","ARE","ARM","ART","ASH","ASK","ASS","AXE","BAD","BAG","BAR","BAT","BAY","BED","BEE","BEG","BET","BID","BIG","BIN","BIT","BOT","BOW","BOX","BOY","BUD","BUG","BUN","BUS","BUT","BUY","BYE","CAB","CAM","CAN","CAP","CAR","CAT","COP","COT","COW","CRY","CUP","CUT","DAD","DAM","DAY","DID","DIE","DIG","DIM","DIP","DOG","DOT","DUE","DYE","EAR","EAT","EGG","EGO","END","ERA","EVE","EYE","FAN","FAR","FAT","FAX","FEE","FIG","FIN","FIT","FIX","FLU","FLY","FOG","FOR","FOX","FRY","FUN","FUR","GAP","GAS","GEL","GEM","GET","GOD","GOT","GUM","GUN","GUT","GUY","GYM","HAD","HAM","HAS","HAT","HEN","HER","HIM","HIS","HIT","HOT","HOW","HUG","HUT","ICE","ICH","ILL","INK","INN","ITS","JAM","JAR","JAW","JET","JOB","JOY","JUG","KID","LAB","LAP","LAW","LEG","LID","LIP","LOO","LOT","LOW","LUX","LYE","MAD","MAN","MAP","MID","MOM","MUD","MUG","NET","NEW","NOT","NOW","NUT","OAK","ODD","OFF","OIL","OLD","ONE","OUR","OUT","OWL","OWN","PAD","PAT","PAY","PEN","PET","PIC","PIE","PIG","PIN","PIT","POP","POT","PUB","PUT","RAT","RAW","RAY","RED","ROW","RUB","RUN","SAD","SAT","SAW","SAY","SEA","SEE","SET","SHE","SHY","SIN","SIR","SIT","SIX","SKY","SON","SPA","SPY","SUM","SUN","TAB","TAG","TAJ","TAP","TAR","TEA","TEN","THE","TIN","TIP","TOP","TOY","TRY","TWO","TYE","USE","VAN","VET","WAR","WAS","WAX","WAY","WHO","WHY","WIN","WON","YAK","YES","YET","YOU","ZIP","ZOO"];
+
+	var lsObj = JSON.parse(localStorage.getItem("vb"));
+
+	if (lsObj && lsObj.class > -1) {
+		loadClass(lsObj.class);
+		$("#" + lsObj.class).addClass("current");
+	}
+
+	if (lsObj && lsObj.helpClosed) {
+		$("#help").hide();
+	}
+
+	$(".wordsBtn").on('click', function () {
+		loadClass(this.id);
+		$('.words').scrollTop(0);
+
+		$("#" + lsObj.class).removeClass("current");
+
+		if (lsObj) {
+			lsObj.class = parseInt(this.id);
+			localStorage.setItem("vb", JSON.stringify(lsObj));
+		} else {
+			localStorage.setItem("vb", JSON.stringify({ class: this.id }));
+		}
+
+		$("#" + this.id).addClass("current");
+
+	});
+
+
+
+
+	$(".3letter").on('click', function () {
+		var wordsi = ["ACE", "ACT", "ADD", "ADS", "AGE", "AGO", "AID", "AIM", "AIR", "ALL", "AND", "ANT", "ANY", "APE", "ARC", "ARE", "ARM", "ART", "ASH", "ASK", "ASS", "AXE", "BAD", "BAG", "BAR", "BAT", "BAY", "BED", "BEE", "BEG", "BET", "BID", "BIG", "BIN", "BIT", "BOT", "BOW", "BOX", "BOY", "BUD", "BUG", "BUN", "BUS", "BUT", "BUY", "BYE", "CAB", "CAM", "CAN", "CAP", "CAR", "CAT", "COP", "COT", "COW", "CRY", "CUP", "CUT", "DAD", "DAM", "DAY", "DID", "DIE", "DIG", "DIM", "DIP", "DOG", "DOT", "DUE", "DYE", "EAR", "EAT", "EGG", "EGO", "END", "ERA", "EVE", "EYE", "FAN", "FAR", "FAT", "FAX", "FEE", "FIG", "FIN", "FIT", "FIX", "FLU", "FLY", "FOG", "FOR", "FOX", "FRY", "FUN", "FUR", "GAP", "GAS", "GEL", "GEM", "GET", "GOD", "GOT", "GUM", "GUN", "GUT", "GUY", "GYM", "HAD", "HAM", "HAS", "HAT", "HEN", "HER", "HIM", "HIS", "HIT", "HOT", "HOW", "HUG", "HUT", "ICE", "ICH", "ILL", "INK", "INN", "ITS", "JAM", "JAR", "JAW", "JET", "JOB", "JOY", "JUG", "KID", "LAB", "LAP", "LAW", "LEG", "LID", "LIP", "LOO", "LOT", "LOW", "LUX", "LYE", "MAD", "MAN", "MAP", "MID", "MOM", "MUD", "MUG", "NET", "NEW", "NOT", "NOW", "NUT", "OAK", "ODD", "OFF", "OIL", "OLD", "ONE", "OUR", "OUT", "OWL", "OWN", "PAD", "PAT", "PAY", "PEN", "PET", "PIC", "PIE", "PIG", "PIN", "PIT", "POP", "POT", "PUB", "PUT", "RAT", "RAW", "RAY", "RED", "ROW", "RUB", "RUN", "SAD", "SAT", "SAW", "SAY", "SEA", "SEE", "SET", "SHE", "SHY", "SIN", "SIR", "SIT", "SIX", "SKY", "SON", "SPA", "SPY", "SUM", "SUN", "TAB", "TAG", "TAJ", "TAP", "TAR", "TEA", "TEN", "THE", "TIN", "TIP", "TOP", "TOY", "TRY", "TWO", "TYE", "USE", "VAN", "VET", "WAR", "WAS", "WAX", "WAY", "WHO", "WHY", "WIN", "WON", "YAK", "YES", "YET", "YOU", "ZIP", "ZOO"];
 		$(".words").empty();
 
-		for(var i=0; i<wordsi.length; i++){					
-			$(".words").append( "<div class='wordi'>"+wordsi[i]+"<img id='imgt"+i+"' data-num='"+i+"' align='right' src='3-letter-words/" + wordsi[i].toLowerCase() + ".jpg' /></div>" );
+		for (var i = 0; i < wordsi.length; i++) {
+			$(".words").append("<div class='wordi'>" + wordsi[i] + "<img id='imgt" + i + "' data-num='" + i + "' align='right' src='3-letter-words/" + wordsi[i].toLowerCase() + ".jpg' /></div>");
 		}
 	});
-	
-	$("#knownBtn").on('click', function() {
+
+	$("#knownBtn").on('click', function () {
 		$(".words").empty();
-		$(".words").html('<p style="column-count: 3; margin-left: 50px;"><b>'+addedWords.join("</br>")+'</b></p>');
+		$(".words").html('<p style="column-count: 3; margin-left: 50px;"><b>' + addedWords.join("</br>") + '</b></p>');
 	});
-	
+
+	$("#helpLink").click(function () {
+		$("#help").show();
+	});
+
 	/*var a = ["1","2","3","2","4"];                                                                 
 	var removedItems = a.remove("4", true);        //a = ["1","2","3","2"], removedItems = ["4"];
 	console.log(a);
@@ -73,113 +204,128 @@ window.onload = function() {
 	removedItems     = b.remove(["2","4"], true);  //b = ["1","3"],   removedItems = ["2","2","4"];
 	console.log(b);	*/
 
-    //Check File API support
-    if (window.File && window.FileList && window.FileReader) {
-        var filesInput = document.getElementById("files");
+	//Check File API support
+	if (window.File && window.FileList && window.FileReader) {
+		var filesInput = document.getElementById("files");
 
-        filesInput.addEventListener("change", function(event) {
+		filesInput.addEventListener("change", function (event) {
 
-            var files = event.target.files; //FileList object
-            var output = document.getElementById("result");
+			var files = event.target.files; //FileList object
+			var output = document.getElementById("result");
 
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
+			for (var i = 0; i < files.length; i++) {
+				var file = files[i];
 
-                //Only plain text
-                //if (!file.type.match("plain")) continue;
+				//Only plain text
+				//if (!file.type.match("plain")) continue;
 
-                var picReader = new FileReader();
+				var picReader = new FileReader();
 
-                picReader.addEventListener("load", function(event) {
+				picReader.addEventListener("load", function (event) {
 
-                    var textFile = event.target;
+					var textFile = event.target;
 
-                    var div = document.createElement("div");
-					
-					
+					var div = document.createElement("div");
+
+
 					var string = textFile.result;
-					
+
 					string = string.replace(/\r?\n|\r/gi, " "); // removing line breaks
 
 					string = string.replace(/\.|\'s|n't|♪|you're|i'm|you'll|you'd|they'll|it'll|there'd|why'd|he'll|who'd|weeks'|how'd|he'd|'cause|we're|she'd|i'll|we've|they've|they're|i've|you've|we'll|i'd|fyers'|/gi, "");
 
-					
+
 					string = removeFont(string);
-					
+
 					string = string.replace(/[0-9`~!@#$%^&*()_|+\-=?;:"",.<>\{\}\[\]\\\/]/gi, "");
 
-					
+
 					string = string.toLowerCase();
-					
+
 					string = string.removeStopWords();
-					
+
 					var words = string.split(" ");
-					
+
 					//words = $.unique(words);
 					words.removeEmpty();
-					
-                    //div.innerText = words;
-					
+
+					//div.innerText = words;
+
 					buildWords(words);
 
-                    //output.insertBefore(div, null);
+					//output.insertBefore(div, null);
 					$('input[type="file"]').val(null);
-                });
+				});
 
-                //Read the text file
-                picReader.readAsText(file);
-            }
+				//Read the text file
+				picReader.readAsText(file);
+			}
 
-        });
-    }
-    else {
-        console.log("Your browser does not support File API");
-    }
-	
+		});
+	}
+	else {
+		console.log("Your browser does not support File API");
+	}
+
+	var available_voices = window.speechSynthesis.getVoices();
+
+
+	var utter = new SpeechSynthesisUtterance();
+	// utter.text = "Hello! How are you?";
+	utter.rate = 0.6;
+	utter.pitch = 0.5;
+	utter.voice = available_voices[5];
+	var ssynth = window.speechSynthesis;
 
 	function loadClass(num) {
-		$('.words').scrollTop(0);
 		string = classes[num].words.toLowerCase();
 		string = string.removeStopWords();
 		var wordsi = string.split(" ");
-		
+
 		$(".words").empty();
 
-		for(var i=0; i<wordsi.length; i++){
-			$(".words").append( "<div class='word'><b>"+wordsi[i]+"</b><img class='checkbox' src='checkbox_empty.png' /></div>" );
+		for (var i = 0; i < wordsi.length; i++) {
+			$(".words").append("<div class='word'><b>" + wordsi[i] + "</b><img class='checkbox' src='checkbox_empty.png' /></div>");
 		}
 
-		$(".words .word").click(function() {
+
+
+		$(".words .word").click(function () {
 			var word = $(this).text();
 			$("#selWord").text(word);
+			$("#moreW").attr("href", "./ssk.html?w=" + word);
 			$("#pop1").show();
-			$( "#popRelWords" ).text("Loading related words. Please wait.");
+			$("#popRelWords").html('Loading related words. Please wait.<br />			<img src="g.gif" />');
 			$.ajax({
-				type : 'get',	//Request method: GET, POST  
+				type: 'get',	//Request method: GET, POST  
 				method: 'get',
-				dataType:"JSON",
+				dataType: "JSON",
 				contentType: "application/JSONP; charset=utf-8",
 				crossDomain: true,
-				url : 'http://api.conceptnet.io/related/c/en/'+word+'?filter=/c/en&limit=11',
-				success:function(data) {
+				url: 'http://api.conceptnet.io/related/c/en/' + word + '?filter=/c/en&limit=11',
+				success: function (data) {
 					var res = data.related;
 					var words = [];
-					$.each(res, function(i, item) {
+					$.each(res, function (i, item) {
 						var word = item["@id"].split("/")[3];
 						words.push(word);
 					});
 					words.shift();
-					$( "#popRelWords" ).empty();
-					$( "#popRelWords" ).scrollLeft($( "#popRelWords" ).width());
-					$( "#popRelWords" ).scrollTop(0);
-					$.each(words, function(i, item) {
-						$( "#popRelWords" ).append(item+"<br/>")
+					$("#popRelWords").empty();
+					$("#popRelWords").scrollLeft($("#popRelWords").width());
+					$("#popRelWords").scrollTop(0);
+					$.each(words, function (i, item) {
+						$("#popRelWords").append(item.split("_").join(" ") + "<br/>");
 					});
-					
+					var wordsx = $("#popRelWords").html();
+					$("#tf").val($("#selWord").text() + "\n"+wordsx.split("<br>").join("\n"));
+					utter.text = $("#tf").val();
+					ssynth.speak(utter);
+
 				},
-				error: function(e) {
+				error: function (e) {
 					alert(JSON.stringify(e));
-			}
+				}
 			})
 
 
@@ -187,62 +333,63 @@ window.onload = function() {
 
 		enableCheckBoxes()
 	}
-	
-	function removeFont(str){
-		while(str.indexOf("<font") > -1) {
+
+	function removeFont(str) {
+		while (str.indexOf("<font") > -1) {
 			var startPos = str.indexOf("<font");
 			var endPos = str.indexOf("/font>");
-			
-			str= str.substring(0, startPos) + str.substring(endPos+5);
+
+			str = str.substring(0, startPos) + str.substring(endPos + 5);
 		}
-		
+
 		return str;
 	}
-	
-	
-	function buildWords(wws){
-		
-		var ws = wws.filter(function(itm,i,wws){
-			return i==wws.indexOf(itm);
+
+
+	function buildWords(wws) {
+
+		var ws = wws.filter(function (itm, i, wws) {
+			return i == wws.indexOf(itm);
 		});
 
 		$(".words").empty();
-		
-		for(var i=0; i<ws.length; i++){
-			$(".words").append( "<div class='word'><a href='http://dictionary.reference.com/browse/"+ws[i]+"' target='blank'>"+ws[i]+"</a><!--span class='close'>x</span--><img class='checkbox' src='checkbox_empty.png' /></div>" );
-		}
-		
-		
 
-		
-		
-		$(".close").on('click', function(){
-			 $(this).parent().remove();
+		for (var i = 0; i < ws.length; i++) {
+			$(".words").append("<div class='word'><a href='http://dictionary.reference.com/browse/" + ws[i] + "' target='blank'>" + ws[i] + "</a><!--span class='close'>x</span--><img class='checkbox' src='checkbox_empty.png' /></div>");
+		}
+
+
+
+
+
+		$(".close").on('click', function () {
+			$(this).parent().remove();
 		});
-		
+
 		enableCheckBoxes();
-		
-		$(".removeBtn").on('click', function(){
+
+		$(".removeBtn").on('click', function () {
 			$(".selected").remove();
 		});
 	}
-	
-	
+
+
 	function enableCheckBoxes() {
-		$(".checkbox").on('click', function(){
-			if($(this).attr('src') == "checkbox_empty.png"){
+		$(".checkbox").on('click', function (e) {
+			e.stopPropagation();
+			if ($(this).attr('src') == "checkbox_empty.png") {
 				$(this).attr('src', 'checkbox_checked.png');
 				$(this).parent().addClass("selected");
-				
+
 				$('.words').scrollTop($('.words').scrollTop() + 55);
-				
+
 			} else {
 				$(this).attr('src', 'checkbox_empty.png');
 				$(this).parent().removeClass("selected");
 			}
 		});
 
-		$("#addBtn").on('click', function(){
+		$("#addBtn").on('click', function () {
 			/*var request = new XMLHttpRequest();
 			request.open("GET", "/gcide_xml-0.51/gcide_xml-0.51/xml_files/gcide_t.xml", false);
 			request.send();
@@ -255,113 +402,44 @@ window.onload = function() {
 					alert(names[j].childNodes[0].nodeValue);
 				}
 			}*/
-			
-			
-			$(".selected").each(function() {
+
+
+			$(".selected").each(function () {
 				var val = $(this).text();
-				if(addedWords.indexOf(val)<0)
-				addedWords.push(val);
+				if (addedWords.indexOf(val) < 0)
+					addedWords.push(val);
 			});
-			
+
 			localStorage["storedWords"] = JSON.stringify(addedWords);
-			
+
 			$(".selected").hide();
 
 			$("#count").text(JSON.parse(localStorage["storedWords"]).length);
 		});
 	}
-	
 
-	$("#closeBtn").click(function() {
+
+	$("#closeBtn").click(function () {
 		$("#pop1").hide();
+		ssynth.cancel();
 	});
 	$("#pop1").hide();
-	
-	
-	String.prototype.removeStopWords = function() {
-    var x;
-    var y;
-    var word;
-    var stop_word;
-    var regex_str;
-    var regex;
-    var cleansed_string = this.valueOf();
-    var stop_words = [
-		"",
-		"[",
-		"`",
-		"~",
-		"!",
-		"@",
-		"#",
-		"$",
-		"%",
-		"^",
-		"&",
-		"*",
-		"(",
-		")",
-		"_",
-		"|",
-		"+",
-		"-",
-		"=",
-		"?",
-		";",
-		":",
-		",",
-		".",
-		"<",
-		">",
-		"{",
-		"}",
-		"[",
-		"]",
-		"/",
-		"]",
-		"0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7",
-		"8",
-		"9",
-		"one","two","three","four","five","six","seven","eight","nine","zero"
-	];
-	stop_words = stop_words.concat(addedWords);
-         
-    // Split out all the individual words in the phrase
-    words = cleansed_string.match(/[^\s]+|\s+[^\s+]$/g)
-	//console.log(words);
-    // Review all the words
-    for(x=0; x < words.length; x++) {
-        // For each word, check all the stop words
-        for(y=0; y < stop_words.length; y++) {
-            // Get the current word
-            word = words[x].replace(/\s+|[^a-z]+/g, "");   // Trim the word and remove non-alpha
-             
-            // Get the stop word
-            stop_word = stop_words[y].toLowerCase();
-             
-            // If the word matches the stop word, remove it from the keywords
-            if(word.toLowerCase() == stop_word.toLowerCase()) {
-                // Build the regex
-                regex_str = "^\\s*"+stop_word+"\\s*$";      // Only word
-                regex_str += "|^\\s*"+stop_word+"\\s+";     // First word
-                regex_str += "|\\s+"+stop_word+"\\s*$";     // Last word
-                regex_str += "|\\s+"+stop_word+"\\s+";      // Word somewhere in the middle
-                regex = new RegExp(regex_str, "g");
-             
-                // Remove the word from the keywords
-                cleansed_string = cleansed_string.replace(regex, " ");
-            }
-        }
-    }
-    return cleansed_string.replace(/^\s+|\s+$/g, "");
-}
+
+
+	$("#closeBtnHelp").click(function () {
+		$("#help").hide();
+
+		if (lsObj) {
+			lsObj.helpClosed = true;
+			localStorage.setItem("vb", JSON.stringify(lsObj));
+		} else {
+			localStorage.setItem("vb", JSON.stringify({ helpClosed: true }));
+		}
+	});
+	// $("#help").hide();
+
+
+
 
 
 }

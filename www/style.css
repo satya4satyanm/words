@@ -4,7 +4,6 @@ body{
     margin: 0;
 	background: #eee;
 	overflow-y: hidden;
-	border-bottom: 20px solid #000;
 }
 
 header h1{
@@ -21,6 +20,15 @@ h3, h4 {
 	margin: 10px 0;
 	text-align: center;
 }
+
+h3 a {
+	margin-right: 25px;
+}
+
+h3 #helpLink {
+	cursor: pointer;
+}
+
 
 article
 {
@@ -44,6 +52,7 @@ input[type='file']{
 	scroll-behavior: smooth;
 	padding-left: 25px;
 	box-sizing: border-box;
+	text-align: center;
 }
 
 .word{
@@ -54,6 +63,7 @@ input[type='file']{
     margin: 5px auto;
     overflow: hidden;
     width: 75%;
+	text-align: left;
 }
 
 .word a{
@@ -74,7 +84,6 @@ input[type='file']{
 	height:30px;
 	margin-right:5px;
 }
-
 
 .wordsBtn, .myButton {
 	-moz-box-shadow: 3px 4px 0px 0px #1564ad;
@@ -115,6 +124,10 @@ input[type='file']{
 .wordsBtn:active, .myButton:active {
 	position:relative;
 	top:1px;
+}
+
+.wordsBtn.current, .wordsBtn.current:active {
+	background: linear-gradient(to bottom, #ff0000 5%, #aa0000 100%);
 }
 
 .custom-file-input::-webkit-file-upload-button {
@@ -186,6 +199,10 @@ a {
 	height: 3000px;
 	background: rgba(0,0,0,0.8);
 	z-index: 202;
+}
+
+#help {
+	display: block;
 }
 
 .popup {

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html language="en-us" class="aui kes">
-	<head>
-		<meta charset="utf-8" />
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' http://*; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; media-src *; img-src * 'self' data: file: cdvfile: http: https:; frame-src http: https: gap: cdvfile:; connect-src *">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Word Learner</title>
-		<link rel="stylesheet" href="style.css"/>
-		<!-- <script type="text/javascript" src="phonegap.js"></script> -->
-		<style>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self' http://*; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; media-src *; img-src * 'self' data: file: cdvfile: http: https:; frame-src http: https: gap: cdvfile:; connect-src *">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Word Learner</title>
+	<link rel="stylesheet" href="style.css" />
+	<!-- <script type="text/javascript" src="phonegap.js"></script> -->
+	<style>
 		.result {
 			column-count: 2;
 			height: 325px;
@@ -23,89 +25,105 @@
 			margin: 10px 0;
 			min-height: 80px;
 		}
+
 		.img {
 			max-height: 60px;
 			max-width: 100px;
 			margin: 5px;
 		}
-		</style>
-	</head>
-	<body>
-		<header>
-			<h1>Activities</h1> <center><h3><a href="index.html">Home</a> 
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Activities</h1>
+		<center>
+			<h3><a href="index.html">Home</a>
 				<!-- <a href="more.html">Back</a> -->
-			</h3></center>
-		</header>
-		<div>
-			<center>
-				<P>Select a topic to get words to build upon.</P>
-				<input type="text" name="w" id="w" placeholder="cow" style="font-size: 24px; width: 50%;border: 2px solid lightskyblue; padding: 5px;" > <input class="myButton" type="button" value="Load" id="b" style="font-size:24px;">
-			</center>
-			<div id="imgholder"></div>
-			<ul class="result"></ul>
-		</div>
-		<script src="js/jquery.js"></script>
-		<script>
-			//https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q=cow&image_type=photo&pretty=true&per_page=3
+			</h3>
+		</center>
+	</header>
+	<div>
+		<center>
+			<P>Select a topic to get words to build upon.</P>
+			<input type="text" name="w" id="w" placeholder="cow"
+				style="font-size: 24px; width: 50%;border: 2px solid lightskyblue; padding: 5px;"> <input
+				class="myButton" type="button" value="Load" id="b" style="font-size:24px;">
+		</center>
+		<div id="imgholder"></div>
+		<ul class="result"></ul>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script>
+		//https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q=cow&image_type=photo&pretty=true&per_page=3
+		$(document).ready(
+			function () {
+				var word = window.location.href.split("w=")[1];
+				if (word) {
+					$("#w").val(word);
+					$('#b').trigger("click");
+				}
+			}
+		)
+		$('#b').click(
+			function () {
+				$.get("https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q=" + $("#w").val() + "&image_type=photo&pretty=true&per_page=3",
+					function (data) {
+						var res = data.hits;
+						$("#imgholder").empty();
+						$.each(res, function (i, item) {
+							var iurl = item["previewURL"];
+							$("#imgholder").append("<img src='" + iurl + "' class='img' />");
+						});
 
-			$('#b').click(
-				function() {
-					$.get( "https://pixabay.com/api/?key=14067395-e0ad683c4bb3d2af50c6bb283&q="+$("#w").val()+"&image_type=photo&pretty=true&per_page=3", 
-						function( data ) {
-							var res = data.hits;
-							$( "#imgholder" ).empty();
-							$.each(res, function(i, item) {
-								var iurl = item["previewURL"];
-								$("#imgholder").append("<img src='"+iurl+"' class='img' />");
-							});
+						var wordin = $("#w").val().toLowerCase();
+						$.ajax({
+							type: 'get',	//Request method: GET, POST  
+							method: 'get',
+							dataType: "JSON",
+							contentType: "application/JSONP; charset=utf-8",
+							crossDomain: true,
+							url: 'http://api.conceptnet.io/related/c/en/' + wordin + '?filter=/c/en&limit=50',
+							success: function (data) {
+								var res = data.related;
+								var words = [];
+								$.each(res, function (i, item) {
+									var word = item["@id"].split("/")[3];
+									words.push(word);
+								});
+								sortByLen(words);
+								$(".result").empty();
+								$(".result").scrollLeft($(".result").width());
+								$.each(words, function (i, item) {
+									$(".result").append("<li><b>" + item + "</b></li>")
+								});
 
-							var wordin = $("#w").val().toLowerCase();
-							$.ajax({
-								type : 'get',	//Request method: GET, POST  
-								method: 'get',
-								dataType:"JSON",
-								contentType: "application/JSONP; charset=utf-8",
-								crossDomain: true,
-								url : 'http://api.conceptnet.io/related/c/en/'+wordin+'?filter=/c/en&limit=50',
-								success:function(data) {
-									var res = data.related;
-									var words = [];
-									$.each(res, function(i, item) {
-										var word = item["@id"].split("/")[3];
-										words.push(word);
-									});
-									sortByLen(words);
-									$( ".result" ).empty();
-									$( ".result" ).scrollLeft($( ".result" ).width());
-									$.each(words, function(i, item) {
-										$( ".result" ).append("<li><b>"+item+"</b></li>")
-									});
-									
-								},
-								error: function(e) {
-									alert(JSON.stringify(e));
+							},
+							error: function (e) {
+								alert(JSON.stringify(e));
 							}
-							})
+						})
 
 
 
 
 					});
 
-					
-				}
-			)
-			
 
-			function sortByLen(arr) {
-				arr.sort(function(a,b){
-					return a.length - b.length;
-				})
-
-				return arr;
 			}
+		)
 
-		</script>
-		
-	</body>
+
+		function sortByLen(arr) {
+			arr.sort(function (a, b) {
+				return a.length - b.length;
+			})
+
+			return arr;
+		}
+
+	</script>
+
+</body>
+
 </html>
