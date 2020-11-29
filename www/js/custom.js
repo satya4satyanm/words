@@ -436,7 +436,7 @@ window.onload = function () {
 			localStorage.setItem("vb", JSON.stringify({ helpClosed: true }));
 		}
 	});
-	// $("#help").hide();
+	$("#help").hide();
 
 
 
