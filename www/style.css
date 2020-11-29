@@ -223,3 +223,7 @@ a {
 	line-height: 28px;
     font-weight: bold;
 }
+
+#help {
+	display: none;
+}
