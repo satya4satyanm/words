@@ -162,9 +162,9 @@ window.onload = function () {
 		loadClass(this.id);
 		$('.words').scrollTop(0);
 
-		$("#" + lsObj.class).removeClass("current");
 
 		if (lsObj) {
+			$("#" + lsObj.class).removeClass("current");
 			lsObj.class = parseInt(this.id);
 			localStorage.setItem("vb", JSON.stringify(lsObj));
 		} else {
@@ -318,7 +318,7 @@ window.onload = function () {
 						$("#popRelWords").append(item.split("_").join(" ") + "<br/>");
 					});
 					var wordsx = $("#popRelWords").html();
-					$("#tf").val($("#selWord").text() + "\n"+wordsx.split("<br>").join("\n"));
+					$("#tf").val($("#selWord").text() + "\n" + wordsx.split("<br>").join("\n"));
 					utter.text = $("#tf").val();
 					ssynth.speak(utter);
 
