@@ -155,7 +155,8 @@ window.onload = function () {
 	}
 
 	if (lsObj && lsObj.helpClosed) {
-		$("#help").hide();
+		document.querySelector("#help").style.display = "none";
+
 	}
 
 	$(".wordsBtn").on('click', function () {
@@ -193,7 +194,8 @@ window.onload = function () {
 	});
 
 	$("#helpLink").click(function () {
-		$("#help").show();
+		document.querySelector("#help").style.display = "block";
+
 	});
 
 	/*var a = ["1","2","3","2","4"];                                                                 
@@ -294,7 +296,8 @@ window.onload = function () {
 			var word = $(this).text();
 			$("#selWord").text(word);
 			$("#moreW").attr("href", "./ssk.html?w=" + word);
-			$("#pop1").show();
+		document.querySelector("#pop1").style.display = "block";
+
 			$("#popRelWords").html('Loading related words. Please wait.<br />			<img src="g.gif" />');
 			$.ajax({
 				type: 'get',	//Request method: GET, POST  
@@ -412,7 +415,7 @@ window.onload = function () {
 
 			localStorage["storedWords"] = JSON.stringify(addedWords);
 
-			$(".selected").hide();
+		document.querySelector(".selected").style.display = "none";
 
 			$("#count").text(JSON.parse(localStorage["storedWords"]).length);
 		});
@@ -420,14 +423,16 @@ window.onload = function () {
 
 
 	$("#closeBtn").click(function () {
-		$("#pop1").hide();
+		document.querySelector("#pop1").style.display = "none";
+
 		ssynth.cancel();
 	});
-	$("#pop1").hide();
+	document.querySelector("#pop1").style.display = "none";
+
 
 
 	$("#closeBtnHelp").click(function () {
-		$("#help").hide();
+		document.querySelector("#help").style.display = "none";
 
 		if (lsObj) {
 			lsObj.helpClosed = true;
@@ -436,7 +441,8 @@ window.onload = function () {
 			localStorage.setItem("vb", JSON.stringify({ helpClosed: true }));
 		}
 	});
-	$("#help").hide();
+	// document.querySelector("#help").style.display = "none";
+
 
 
 
